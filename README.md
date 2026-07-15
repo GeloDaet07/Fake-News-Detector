@@ -7,6 +7,34 @@ This project leverages a **DeBERTa** transformer model for text feature extracti
 - **Frontend:** Vanilla JS, HTML, and Tailwind CSS. Served via a **Vite** development server for instantaneous Hot Module Replacement (HMR).
 - **Backend API:** Python **Flask**. Exposes a `/predict` endpoint that processes the text, extracts embeddings, and returns the LightGBM prediction.
 
+## Downloading the Models (Git LFS)
+
+This project uses Git LFS (Large File Storage) to store the machine learning models. **You must install Git LFS before cloning the repository**, otherwise you will only download small text pointers instead of the actual models, and the backend will fail to load the models.
+
+### Installation
+
+**Mac/Linux:**
+```bash
+# macOS (using Homebrew)
+brew install git-lfs
+
+# Ubuntu/Debian Linux
+sudo apt-get install git-lfs
+```
+
+**Windows:**
+- Download the installer from the [official Git LFS website](https://git-lfs.com/) and run it.
+- Alternatively, if you use Winget, run: `winget install -e --id GitHub.GitLFS`
+
+### Fetching the Models
+
+Once Git LFS is installed on your system, initialize it and clone the repository:
+```bash
+git lfs install
+git clone <repository-url>
+```
+*(Note: If you already cloned the repository without installing Git LFS first, simply install Git LFS and then run `git lfs pull` inside the project folder to download the actual models.)*
+
 ## How to Run the Application
 
 Because this project uses a split architecture (Vite for the frontend, Flask for the backend API), you need to run both servers simultaneously.
