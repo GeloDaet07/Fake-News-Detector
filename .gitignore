@@ -1,0 +1,25 @@
+# Environments
+.venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Models (Optional: un-comment if models are too large for git)
+backend/models/*.pkl
+backend/models/DEBERTA-FNC-v2/
+GEMINI.md
