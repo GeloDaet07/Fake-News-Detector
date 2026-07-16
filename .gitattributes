@@ -1,3 +1,7 @@
 *.safetensors filter=lfs diff=lfs merge=lfs -text
 *.pkl filter=lfs diff=lfs merge=lfs -text
 *.bin filter=lfs diff=lfs merge=lfs -text
+
+backend/models/classifiers/** filter=lfs diff=lfs merge=lfs -text
+backend/models/transformers/** filter=lfs diff=lfs merge=lfs -text
+backend/models/vectorizers/** filter=lfs diff=lfs merge=lfs -text

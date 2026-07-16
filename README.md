@@ -35,6 +35,19 @@ git clone <repository-url>
 ```
 *(Note: If you already cloned the repository without installing Git LFS first, simply install Git LFS and then run `git lfs pull` inside the project folder to download the actual models.)*
 
+## Project Setup
+
+To install all the necessary dependencies for both the frontend (Node.js/npm) and the backend (Python), simply run the included setup script:
+
+```bash
+./setup.sh
+```
+
+This will automatically:
+1. Install the frontend dependencies.
+2. Create a Python virtual environment (`.venv`).
+3. Install the required Python packages from `requirements.txt`.
+
 ## How to Run the Application
 
 Because this project uses a split architecture (Vite for the frontend, Flask for the backend API), you need to run both servers simultaneously.

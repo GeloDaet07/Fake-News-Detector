@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Fake News Detector</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="description" content="AI-powered classification using DeBERTa & LightGBM to detect fake news.">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
@@ -36,9 +37,27 @@
                         <div class="relative">
                             <label for="news-text" class="sr-only">News Article Content</label>
                             <textarea id="news-text" rows="8" 
-                                class="w-full bg-white border border-slate-200 rounded-2xl p-6 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all duration-300 resize-y shadow-sm" 
+                                class="w-full bg-white border border-slate-200 rounded-2xl p-6 pb-14 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all duration-300 resize-y shadow-sm" 
                                 placeholder="Paste the news article or text here to verify its authenticity..." required></textarea>
                             
+                            <div class="absolute bottom-4 left-4 z-20">
+                                <label for="model-select" class="sr-only">Select Model</label>
+                                <div class="relative">
+                                    <select id="model-select" class="appearance-none text-xs sm:text-sm bg-slate-50 border border-slate-200 text-slate-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-3 pr-8 py-1.5 shadow-sm transition-colors cursor-pointer outline-none hover:bg-slate-100 font-medium">
+                                        <option value="deberta-lgbm" selected>DeBERTa-LightGBM (Default)</option>
+                                        <option value="deberta-classifier">DeBERTa Classifier</option>
+                                        <option value="bert-lgbm">BERT-LightGBM</option>
+                                        <option value="roberta-lgbm">RoBERTa-LightGBM</option>
+                                        <option value="tfidf-lgbm">TF-IDF LightGBM</option>
+                                        <option value="tfidf-svm">TF-IDF SVM</option>
+                                        <option value="tfidf-lr">TF-IDF LR</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="absolute bottom-4 right-4 text-slate-400 text-xs font-medium bg-white px-2 py-1 rounded">
                                 <span id="char-count">0</span> chars
                             </div>
@@ -89,6 +108,33 @@
                                     <div class="w-full bg-slate-100 rounded-full h-4 p-1 border border-slate-200 shadow-inner">
                                         <div id="confidence-bar" class="h-full rounded-full transition-all duration-1000 ease-out w-0 relative overflow-hidden">
                                             <div class="absolute inset-0 bg-white/30 w-full animate-[shimmer_2s_infinite] -skew-x-12"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="uncertainty-warning" class="hidden mt-6 w-full bg-orange-50 border border-orange-200 p-4 rounded-xl flex items-start text-left shadow-sm">
+                                        <i class="fa-solid fa-circle-exclamation text-orange-500 mt-1 mr-3 text-lg"></i>
+                                        <div>
+                                            <h4 class="text-orange-800 font-semibold text-sm">High Uncertainty</h4>
+                                            <p class="text-orange-600 text-xs mt-1">The model's probabilities are close to 50/50. This prediction might not be reliable.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="metrics-container" class="w-full mt-6 grid grid-cols-2 gap-3 text-center">
+                                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm col-span-2 flex justify-between items-center transition-all hover:bg-slate-100">
+                                            <div class="text-xs text-slate-500 font-bold uppercase tracking-wider">Model Used</div>
+                                            <div id="model-used-text" class="text-sm font-bold text-indigo-600">--</div>
+                                        </div>
+                                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center transition-all hover:bg-slate-100">
+                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Real Prob</div>
+                                            <div id="prob-real-text" class="text-xl font-bold font-mono text-emerald-600">--%</div>
+                                        </div>
+                                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center transition-all hover:bg-slate-100">
+                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Fake Prob</div>
+                                            <div id="prob-fake-text" class="text-xl font-bold font-mono text-rose-600">--%</div>
+                                        </div>
+                                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm col-span-2 flex justify-between items-center transition-all hover:bg-slate-100">
+                                            <div class="text-xs text-slate-500 font-bold uppercase tracking-wider">Inference Time</div>
+                                            <div id="inference-time-text" class="text-lg font-bold font-mono text-slate-700">-- ms</div>
                                         </div>
                                     </div>
                                 </div>
