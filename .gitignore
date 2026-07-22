@@ -20,3 +20,14 @@ dist/
 .idea/
 
 GEMINI.md
+
+# Misclassification Check Script and Data
+backend/check_misclassifications.py
+backend/check_deberta_only.py
+misclassification*.md
+deberta_only_correct.md
+memory_benchmark.py
+simulate.py
+ISOT/
+documents/
+
